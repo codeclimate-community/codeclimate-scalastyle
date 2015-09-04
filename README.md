@@ -4,6 +4,7 @@
 
 `scalastyle` is a configurable style linter for Scala code.
 
+
 ### Installation
 
 1. If you haven't already, [install the Code Climate CLI](https://github.com/codeclimate/codeclimate).
