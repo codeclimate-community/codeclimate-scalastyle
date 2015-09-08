@@ -16,7 +16,7 @@ module CC
         Dir.chdir(@directory) do
           next unless results
           results.xpath('//file').each do |file|
-            path = file['name'].sub(/\A#{@directory}\//, '')
+            path = file['name'].sub("/home/app/", "")
             file.xpath('//error').each do |lint|
               issue = {
                 type: "issue",
