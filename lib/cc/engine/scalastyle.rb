@@ -23,7 +23,7 @@ module CC
                 check_name: lint["source"],
                 description: lint["message"],
                 categories: ["Style"],
-                remediation_points: 500,
+                remediation_points: 50_000,
                 location: {
                   path: path,
                   positions: {
