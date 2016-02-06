@@ -48,7 +48,7 @@ module CC
       private
 
       def project_files
-        Dir.glob("**/*scala")
+        @engine_config['include_paths'] || []
       end
 
       def analysis_files
@@ -57,22 +57,28 @@ module CC
       end
 
       def scalastyle_jar
-        '/home/app/scalastyle_2.11-0.6.0-batch.jar'
+        '/home/app/scalastyle_2.11-0.8.0-batch.jar'
       end
 
       def scalastyle_config
-        @engine_config['config'] || '/home/app/scalastyle_config.xml'
+        @engine_config['config'] || '/code/scalastyle_config.xml'
       end
 
       def results_xml_file_path
         "/home/app/results.xml"
       end
 
+      def results_xml_tmp_file_path
+        "/home/app/results.tmp.xml"
+      end
+
       def exec_scalastyle_with_options
+        Dir.chdir "/code"
         `java -jar #{scalastyle_jar} \
-          -c #{scalastyle_config} \
-          --xmlOutput #{results_xml_file_path} \
+          --config #{scalastyle_config} \
+          --xmlOutput #{results_xml_tmp_file_path} \
           #{analysis_files}`
+        `cat #{results_xml_tmp_file_path} | sed -e 's/file name=\"\\\/code\\\//file name=\"/g' > #{results_xml_file_path}`
       end
 
       def results
