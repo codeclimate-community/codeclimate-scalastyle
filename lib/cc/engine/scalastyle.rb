@@ -17,23 +17,26 @@ module CC
           next unless results
           results.xpath('//file').each do |file|
             path = file['name'].sub("/home/app/", "")
-            file.xpath('//error').each do |lint|
+            file.children.each do |node|
+
+	      lint = node.attributes
+
               issue = {
                 type: "issue",
-                check_name: lint["source"],
-                description: lint["message"],
+                check_name: lint["source"].value,
+                description: lint["message"].value,
                 categories: ["Style"],
                 remediation_points: 50_000,
                 location: {
                   path: path,
                   positions: {
                     begin: {
-                      line: lint["line"].to_i,
-                      column: lint["column"].to_i
+                      line: lint["line"].value.to_i,
+                      column: lint["column"].value.to_i
                     },
                     end: {
-                      line: lint["line"].to_i,
-                      column: lint["column"].to_i
+                      line: lint["line"].value.to_i,
+                      column: lint["column"].value.to_i
                     }
                   }
                 }
