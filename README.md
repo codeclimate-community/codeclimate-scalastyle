@@ -4,6 +4,9 @@
 
 `scalastyle` is a configurable style linter for Scala code.
 
+### Building
+1. Install [sbt](http://www.scala-sbt.org/)
+2. Run `sbt docker`
 
 ### Installation
 
