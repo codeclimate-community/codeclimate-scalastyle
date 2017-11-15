@@ -1,3 +1,9 @@
 engines:
   scalastyle:
     enabled: true
+    config:
+      config: src/main/resources/scalastyle_project.xml
+      include_paths:
+      - engine-core/src
+      exclude_paths:
+      - .*/test

@@ -4,6 +4,15 @@
 
 `scalastyle` is a configurable style linter for Scala code.
 
+### Building
+1. Install [sbt](http://www.scala-sbt.org/)
+2. Run `sbt docker`
+
+
+### Building release docker image
+1. Run `sbt assembly && cp target/scala-2.12/codeclimate-scalastyle-assembly-<version>.jar ./`.
+   This will create assembled jar with all dependencies.
+2. Run `docker build -t codeclimate/codeclimate-scalastyle .`    
 
 ### Installation
 
