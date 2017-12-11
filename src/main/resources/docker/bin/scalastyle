@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec java -cp ".:/usr/src/app/engine-core.jar:/usr/src/app/dependencies/*" org.codeclimate.scalastyle.CodeClimateEngine "$@"

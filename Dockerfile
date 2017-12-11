@@ -1,16 +1,19 @@
-FROM java
+FROM openjdk:alpine
 
-RUN apt-get update
-RUN apt-get install -y ruby ruby-nokogiri
+LABEL maintainer "Ivan Luzyanin <ivan@acorns.com>"
+LABEL maintainer "Jeff Sippel <jsippel@acorns.com>"
 
-RUN adduser --uid 9000 --disabled-password --quiet --gecos "" app
+RUN apk update && apk upgrade
+
+RUN addgroup -g 9000 -S code && \
+  adduser -S -G code app
 USER app
 
-WORKDIR /home/app
+COPY codeclimate-scalastyle-assembly-0.1.0.jar /usr/src/app/engine-core.jar
+COPY src/main/resources/docker /usr/src/app
+COPY src/main/resources/docker/engine.json /
 
-COPY scalastyle_config.xml /home/app/
-COPY scalastyle_2.11-0.6.0-batch.jar /home/app/
+WORKDIR /code
+VOLUME /code
 
-COPY . /home/app
-
-CMD ["/home/app/bin/scalastyle"]
+CMD ["/usr/src/app/bin/scalastyle"]

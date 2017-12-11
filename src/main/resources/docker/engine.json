@@ -1,0 +1,11 @@
+{
+  "name": "scalastyle",
+  "description": "Run scalastyle checks",
+  "maintainer": {
+    "name": "Jeff Sippel",
+    "email": "jsippel@acorns.com"
+  },
+  "languages" : ["Scala"],
+  "version": "0.1.0",
+  "spec_version": "0.3.1"
+}

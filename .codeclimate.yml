@@ -1,3 +1,9 @@
+---
 engines:
   scalastyle:
     enabled: true
+    config:
+      config: src/main/resources/scalastyle_project.xml
+exclude_paths:
+- "**/src/test/"
+- "**/target/"
