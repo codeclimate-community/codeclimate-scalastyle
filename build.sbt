@@ -1,6 +1,6 @@
 name := "codeclimate-scalastyle"
 organization in ThisBuild := "codeclimate"
-version in ThisBuild := "0.1.0"
+version in ThisBuild := "0.1.1"
 scalaVersion in ThisBuild := "2.12.2"
 
 concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
