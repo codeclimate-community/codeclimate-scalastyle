@@ -6,6 +6,6 @@
     "email": "jsippel@acorns.com"
   },
   "languages" : ["Scala"],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "spec_version": "0.3.1"
 }

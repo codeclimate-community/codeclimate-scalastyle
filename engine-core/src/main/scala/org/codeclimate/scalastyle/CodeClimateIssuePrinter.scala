@@ -9,8 +9,9 @@ import io.circe.syntax._
 import org.scalastyle.{FileSpec, Message, MessageHelper, StyleError}
 
 import scala.collection.JavaConverters._
+import scala.util.{Failure, Success, Try}
 
-class CodeClimateIssuePrinter(workspacePath: String, ps: PrintStream) {
+class CodeClimateIssuePrinter(workspacePath: String, ps: PrintStream, errPrinter: PrintStream = Console.err) {
   private val basePath = new File(workspacePath).toPath
   private val printer = Printer.noSpaces.copy(dropNullKeys = true)
 
@@ -30,15 +31,24 @@ class CodeClimateIssuePrinter(workspacePath: String, ps: PrintStream) {
       val msg: String = se.customMessage.orElse {
         Some(messageHelper.message(se.key, se.args))
       }.getOrElse("Error message not provided")
-      val issue = Issue(location = location,
-        description = String.format(msg, se.args.asJava),
-        check_name = Some(se.clazz.getName),
-        categories = Seq("Style"),
-        severity = Some("major")
-      )
-      val jsonStr = printer.pretty(issue.asJson)
-      ps.print(jsonStr)
-      ps.print("\0")
+      Try(String.format(msg, se.args.asJava)) match {
+        case Success(formattedMessage) =>
+            val issue = Issue(location = location,
+              description = formattedMessage,
+              check_name = Some(se.clazz.getName),
+              categories = Seq("Style"),
+              severity = Some("major")
+            )
+            val jsonStr = printer.pretty(issue.asJson)
+            ps.print(jsonStr)
+            ps.print("\0")
+        case Failure(exception) =>
+          // scalastyle:off
+          errPrinter.println(s"Unable to format the message. Invalid message format for key=${se.key}: '$msg';" +
+            s" args = '${se.args}'. Error: ${exception.printStackTrace()}"
+          )
+          // scalastyle:on
+      }
     case _ => // ignore
   }
 }

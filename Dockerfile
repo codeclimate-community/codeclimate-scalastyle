@@ -24,7 +24,7 @@ RUN addgroup -g 9000 -S code && \
   adduser -S -G code app
 USER app
 
-COPY --from=builder /code/target/scala-2.12/codeclimate-scalastyle-assembly-0.1.0.jar /usr/src/app/engine-core.jar
+COPY --from=builder /code/target/scala-2.12/codeclimate-scalastyle-assembly-*.jar /usr/src/app/engine-core.jar
 COPY src/main/resources/docker /usr/src/app
 COPY src/main/resources/docker/engine.json /
 
